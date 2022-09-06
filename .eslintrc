@@ -1,0 +1,64 @@
+{
+  "parser": "@typescript-eslint/parser",
+  "env": {
+    "es6": true,
+    "node": true,
+    "jest": true,
+    "browser": true
+  },
+  "extends": ["airbnb-base", "prettier", "plugin:@typescript-eslint/recommended"],
+  "plugins": ["node", "@typescript-eslint", "import"],
+  "parserOptions": {
+    "ecmaVersion": 2020,
+    "sourceType": "module"
+  },
+  "rules": {
+    "import/no-unresolved": "error",
+    "import/no-extraneous-dependencies": "off",
+    "import/prefer-default-export": "off",
+    "import/extensions": "off",
+    "max-len": [
+      "error",
+      {
+        "code": 250
+      }
+    ],
+    "space-before-function-paren": "off",
+    "no-tabs": 0,
+    "no-mixed-spaces-and-tabs": 0,
+    "node/exports-style": [
+      "error",
+      "module.exports",
+      {
+        "allowBatchAssign": false
+      }
+    ],
+    "linebreak-style": 0,
+    "semi": [2, "always"],
+    "no-var": "error",
+    "func-names": 2,
+    "no-console": 0,
+    "no-restricted-syntax": [0, "BinaryExpression[operator='in']"],
+    "no-underscore-dangle": ["error", { "allowAfterThis": true }],
+    "no-nested-ternary": "off",
+    "quotes": [
+      2,
+      "single",
+      {
+        "avoidEscape": true,
+        "allowTemplateLiterals": true
+      }
+    ]
+  },
+  "settings": {
+    "import/parsers": {
+      "@typescript-eslint/parser": [".ts", ".tsx"]
+    },
+    "import/resolver": {
+      "typescript": {
+        "alwaysTryTypes": true,
+        "project": "packages/*/tsconfig.json"
+      }
+    }
+  }
+}

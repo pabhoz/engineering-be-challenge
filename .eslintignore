@@ -1,0 +1,14 @@
+!.*
+# node_modules ignored by default
+**/node_modules/*
+# public folder ignored
+**/public/*
+**/build/*
+**/coverage/*
+**/config/*
+**/__tests__/*
+**/migrations/*
+**/_reviewNeeded/*
+*.json
+*__mocks__
+serverless.yml

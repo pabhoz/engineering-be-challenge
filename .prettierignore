@@ -1,0 +1,6 @@
+*.yml
+.serverless
+.md
+*.json
+*.test.*
+*.mock.*
