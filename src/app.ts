@@ -15,7 +15,7 @@ app.use(routes);
 console.time('API start time');
 console.time('Time until error');
 console.log('Starting DB connection.');
-mongoose.connect('mongodb://localhost:27017/api');
+mongoose.connect('mongodb://mongo:27017/api');
 const db = mongoose.connection;
 db.on('error', (error) => {
   console.log('Error connecting to the DB, API cannot be initialized.', error);
