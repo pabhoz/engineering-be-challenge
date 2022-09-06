@@ -13,8 +13,8 @@ const userSchema = new mongoose.Schema({
   role: {
     type: Number,
     enum: RoleEnum,
-    default: RoleEnum.REGULAR
-  }
+    default: RoleEnum.REGULAR,
+  },
 });
 
 const User = mongoose.model('User', userSchema);

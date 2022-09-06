@@ -11,7 +11,7 @@ const toDoSchema = new mongoose.Schema({
     required: false,
   },
   status: {
-    type: String,
+    type: Number,
     enum: StatusEnum,
     default: StatusEnum.TODO,
   },

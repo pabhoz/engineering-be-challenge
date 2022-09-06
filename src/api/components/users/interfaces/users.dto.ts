@@ -1,9 +1,18 @@
+/* eslint-disable max-classes-per-file */
 import { RoleEnum } from './users';
 
 export class CreateUserDto {
-    username: string;
+  username: string;
 
-    password: string;
+  password: string;
 
-    role?: RoleEnum;
-} 
+  role?: RoleEnum;
+}
+
+export class UpdateUserDto {
+  username?: string;
+
+  password?: string;
+
+  role?: RoleEnum;
+}

@@ -1,11 +1,20 @@
+/* eslint-disable max-classes-per-file */
 import { StatusEnum } from './todos';
 
 export class CreateToDoDto {
-    title: string;
+  title: string;
 
-    description: string;
+  description: string;
 
-    status?: StatusEnum;
+  status?: StatusEnum;
 
-    owner: string;
-} 
+  owner: string;
+}
+
+export class UpdateToDoDto {
+  title?: string;
+
+  description?: string;
+
+  status?: StatusEnum;
+}

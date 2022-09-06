@@ -3,7 +3,7 @@ import { Request, Response } from 'express';
 import bcrypt from 'bcrypt';
 import jwt from 'jsonwebtoken';
 import { badRequestError, forbiddenError, mongoDBErrorHandler } from '../../common/errorHandlers';
-import { CreateUserDto } from './interfaces/users.dto';
+import { CreateUserDto, UpdateUserDto } from './interfaces/users.dto';
 import UsersService from './users.service';
 
 const UsersController = {
@@ -43,10 +43,47 @@ const UsersController = {
     }
   },
 
+  update: async (req: Request, res: Response) => {
+    try {
+      const { user } = req.app.locals;
+      const { id } = req.params;
+      const { username, password, role } = req.body;
+      const data: UpdateUserDto = {
+        username,
+        password,
+        role,
+      };
+      const update = await UsersService.update(id, data);
+      if (!update){
+        res.send({ message: `Unexpected error performing update for User ${id}`}).status(500);
+      }
+      console.log('DEBUG')
+      console.log(update)
+      res.send({ _id: id, ...data}).status(201);
+    } catch (error: unknown) {
+      const { status, body } = mongoDBErrorHandler(error);
+      res.status(status).send(body);
+    }
+  },
+
+  delete: async (req: Request, res: Response) => {
+    try {
+      const { id } = req.params;
+      const deleted = await UsersService.delete(id);
+      if(!deleted) {
+        res.send({ message: `Unexpected error performing delete for User ${id}`}).status(500);
+      }
+      res.status(200).send({message: `User ${id} was deleted`});
+    } catch (error) {
+      const { status, body } = mongoDBErrorHandler(error);
+      res.status(status).send(body);
+    }
+  },
+
   login: async (req: Request, res: Response) => {
     try {
       const { username, password } = req.body;
-      if(!(username && password)) {
+      if (!(username && password)) {
         const { status, body } = badRequestError('Both, username and password are required to perform this operation');
         res.status(status).send(body);
       }
@@ -58,20 +95,16 @@ const UsersController = {
       }
 
       const validPassword = await bcrypt.compare(password, user.password);
-      if(!validPassword) {
+      if (!validPassword) {
         const { status, body } = forbiddenError('Invalid credentials');
         res.status(status).send(body);
       }
 
-      const token = jwt.sign(
-        { _id: user._id, username },
-        process.env.TOKEN_KEY,
-        {
-          expiresIn: '1h',
-        }
-      );
+      const token = jwt.sign({ _id: user._id, username }, process.env.TOKEN_KEY, {
+        expiresIn: '1h',
+      });
 
-      res.send(token).status(200);
+      res.send({ access_token: token }).status(200);
     } catch (error: unknown) {
       const { status, body } = mongoDBErrorHandler(error);
       res.status(status).send(body);
