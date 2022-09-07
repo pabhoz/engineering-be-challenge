@@ -55,10 +55,10 @@ const ToDosController = {
         status,
       };
       const update = await ToDosService.update(id, data);
-      if (!update){
-        res.send({ message: `Unexpected error performing update for ToDo ${id}`}).status(500);
+      if (!update) {
+        res.send({ message: `Unexpected error performing update for ToDo ${id}` }).status(500);
       }
-      res.send({ _id: id, ...data, owner: user._id }).status(201);
+      res.send({ _id: id, ...data, owner: user._id }).status(200);
     } catch (error: unknown) {
       const { status, body } = mongoDBErrorHandler(error);
       res.status(status).send(body);
@@ -69,16 +69,15 @@ const ToDosController = {
     try {
       const { id } = req.params;
       const deleted = await ToDosService.delete(id);
-      if(!deleted) {
-        res.send({ message: `Unexpected error performing delete for ToDo ${id}`}).status(500);
+      if (!deleted) {
+        res.send({ message: `Unexpected error performing delete for ToDo ${id}` }).status(500);
       }
-      res.status(200).send({message: `ToDo ${id} was deleted`});
+      res.status(200).send({ message: `ToDo ${id} was deleted` });
     } catch (error) {
       const { status, body } = mongoDBErrorHandler(error);
       res.status(status).send(body);
     }
   },
-
 };
 
 export default ToDosController;

@@ -45,7 +45,6 @@ const UsersController = {
 
   update: async (req: Request, res: Response) => {
     try {
-      const { user } = req.app.locals;
       const { id } = req.params;
       const { username, password, role } = req.body;
       const data: UpdateUserDto = {
@@ -54,12 +53,10 @@ const UsersController = {
         role,
       };
       const update = await UsersService.update(id, data);
-      if (!update){
-        res.send({ message: `Unexpected error performing update for User ${id}`}).status(500);
+      if (!update) {
+        res.send({ message: `Unexpected error performing update for User ${id}` }).status(500);
       }
-      console.log('DEBUG')
-      console.log(update)
-      res.send({ _id: id, ...data}).status(201);
+      res.send({ _id: id, ...data }).status(201);
     } catch (error: unknown) {
       const { status, body } = mongoDBErrorHandler(error);
       res.status(status).send(body);
@@ -70,10 +67,10 @@ const UsersController = {
     try {
       const { id } = req.params;
       const deleted = await UsersService.delete(id);
-      if(!deleted) {
-        res.send({ message: `Unexpected error performing delete for User ${id}`}).status(500);
+      if (!deleted) {
+        res.send({ message: `Unexpected error performing delete for User ${id}` }).status(500);
       }
-      res.status(200).send({message: `User ${id} was deleted`});
+      res.status(200).send({ message: `User ${id} was deleted` });
     } catch (error) {
       const { status, body } = mongoDBErrorHandler(error);
       res.status(status).send(body);

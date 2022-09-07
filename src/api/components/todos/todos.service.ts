@@ -5,10 +5,11 @@ const ToDosService = {
   get: async (id: string, userId: string) => ToDo.findOne({ _id: id, owner: userId }),
   getAll: async (userId: string) => ToDo.find({ owner: userId }),
   create: async (data: CreateToDoDto) => {
+    console.log(ToDo);
     const todo = new ToDo(data);
     return todo.save();
   },
-  update: async (id: string, data: UpdateToDoDto) => ToDo.updateOne({ _id: id }, { $set: {...data}}),
+  update: async (id: string, data: UpdateToDoDto) => ToDo.updateOne({ _id: id }, { $set: { ...data } }),
   delete: async (id: string) => ToDo.deleteOne({ _id: id }),
 };
 

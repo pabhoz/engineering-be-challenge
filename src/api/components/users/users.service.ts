@@ -12,11 +12,11 @@ const UsersService = {
     return user.save();
   },
   update: async (id: string, data: UpdateUserDto) => {
-    const update = {...data};
+    const update = { ...data };
     if (data?.password) {
       update.password = await bcrypt.hash(data.password, 10);
     }
-    return User.updateOne({ _id: id }, { $set: update});
+    return User.updateOne({ _id: id }, { $set: update });
   },
   delete: async (id: string) => User.deleteOne({ _id: id }),
 };
